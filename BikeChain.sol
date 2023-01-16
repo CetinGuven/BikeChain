@@ -83,6 +83,16 @@ contract BikeChain {
     }
 
     //Make Payment
+    function makePayment (address walletAddress) payable public {
+        require (renters[walletAddress].due > 0, "You do not have anything due at this time.");
+        require (renters[walletAddress].balance > msg.value,"You dont have enough funds to cover payment. Please make a deposit.");
+        renters[walletAddress].balance -= msg.value;
+        renters[walletAddress].canRent = true;
+        renters[walletAddress].due = 0;
+        renters[walletAddress].start = 0;
+        renters[walletAddress].end = 0;
+    }
+ } 
 
 
 
